@@ -14,11 +14,14 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use('/wiki', wikiRouter);
+app.use('/', (req, res) => {
+  res.redirect('/wiki');
+});
 app.use('/users', userRouter);
 
-app.get('/', (req, res) => {
-  res.send(layout(''));
-});
+// app.get('/', (req, res) => {
+//   res.send(layout(''));
+// });
 
 const init = async () => {
   await db.sync({ force: true });
